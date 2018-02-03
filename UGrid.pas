@@ -1,0 +1,138 @@
+unit UGrid;
+{
+  demonstrates how to use the OnDrawCell event handler of a StringGrid to
+  display individual cells according to their contents.
+  The use can choose whether to display coloured text or images in the grid.
+  The images are stored in an ImageList component
+}
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, StdCtrls, ExtCtrls, ImgList;
+
+type
+  TGridform = class(TForm)
+    UpGrid: TStringGrid;
+    FillBtn: TButton;
+    ChoiceRG: TRadioGroup;
+    FrontGrid: TStringGrid;
+    DownGrid: TStringGrid;
+    BackGrid: TStringGrid;
+    RightGrid: TStringGrid;
+    LeftGrid: TStringGrid;
+    ExitBtn: TButton;
+    procedure FillBtnClick(Sender: TObject);
+    procedure UpGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+      State: TGridDrawState);
+    procedure ExitBtnClick(Sender: TObject);
+  private
+    grid: tstringgrid;
+  public
+    { Public declarations }
+  end;
+
+var
+  Gridform: TGridform;
+
+implementation
+
+{$R *.dfm}
+
+procedure TGridform.ExitBtnClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TGridform.FillBtnClick(Sender: TObject);
+//fill grid with random integers
+// a stringgrid has a Cells property, essentially a 2D array of strings
+var
+  i, j: Integer;
+    GridName: string;
+begin
+  with Grid do
+  begin
+    for i := 0 to 8 do
+      for j := 0 to 8 do
+        Cells[i, j] := inttostr(random(6));
+  end;
+end;
+
+procedure TGridform.UpGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+// called whenever a cell is drawn
+// ACol and ARow are column and row number of cell
+// Rect is rectangle bounding cell
+var
+  value: Integer;
+  GridName: string;
+begin
+  value := 0;
+  gridname:= (sender as TStringGrid).name;
+  case GridName[1] of
+   'U': Grid:= UpGrid;
+   'D': Grid:= DownGrid;
+   'F': Grid:= FrontGrid;
+   'B': Grid:= BackGrid;
+   'R': Grid:= RightGrid;
+   'L': Grid:= LeftGrid;
+  end;
+  with Grid do
+  begin
+    // get cell contents and convert to integer
+    if Cells[ACol, ARow] <> '' then
+      value := strtoint(Cells[ACol, ARow]);
+    case ChoiceRG.ItemIndex of  //find out what the user has chosen
+      0:
+      begin
+        with Upgrid do
+        begin
+          Canvas.Brush.Color:=ClYellow;
+          canvas.FillRect(Rect);
+        end;
+        with Downgrid do
+        begin
+          Canvas.Brush.Color:=ClWhite;
+          canvas.FillRect(Rect);
+        end;
+        with Frontgrid do
+        begin
+          Canvas.Brush.Color:=ClBlue;
+          canvas.FillRect(Rect);
+        end;
+        with Backgrid do
+        begin
+          Canvas.Brush.Color:=ClGreen;
+          canvas.FillRect(Rect);
+        end;
+        with Rightgrid do
+        begin
+          Canvas.Brush.Color:=ClRed;
+          canvas.FillRect(Rect);
+        end;
+        with Leftgrid do
+        begin
+          Canvas.Brush.Color:=rgb(254,156,24);
+          canvas.FillRect(Rect);
+        end;
+      end;
+      1: case value of
+            0: Canvas.Brush.Color := clwhite;
+            1: Canvas.Brush.Color := clred;
+            2: Canvas.Brush.Color:= rgb(254,156,24);
+            3: Canvas.Brush.Color := clyellow;
+            4: Canvas.Brush.Color := clgreen;
+            5: Canvas.Brush.Color := clblue;
+          end;
+      2: Canvas.Brush.Color := clwhite;
+      3: Canvas.Brush.Color := clred;
+      4: Canvas.Brush.Color:= rgb(254,156,24);
+      5: Canvas.Brush.Color := clyellow;
+      6: Canvas.Brush.Color := clgreen;
+      7: Canvas.Brush.Color := clblue;
+    end;   //case ChoiceRG.ItemIndex
+     canvas.FillRect(Rect);
+  end;  //with
+end;
+end.
