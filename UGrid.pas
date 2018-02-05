@@ -9,7 +9,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Grids, StdCtrls, ExtCtrls, ImgList;
+  Dialogs, Grids, StdCtrls, ExtCtrls, ImgList, Vcl.Menus;
 
 type
   TGridform = class(TForm)
@@ -22,10 +22,27 @@ type
     RightGrid: TStringGrid;
     LeftGrid: TStringGrid;
     ExitBtn: TButton;
+    Solve: TButton;
+    Next: TButton;
+    Previous: TButton;
+    RubiksLbl: TLabel;
+    Solve2: TButton;
+    Tutorial: TButton;
+    ChooseLbl: TLabel;
+    MainMenu: TMainMenu;
+    Menu1: TMenuItem;
+    TutorialMenu: TMenuItem;
+    SolveMenu: TMenuItem;
+    ExitMenu: TMenuItem;
     procedure FillBtnClick(Sender: TObject);
     procedure UpGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
       State: TGridDrawState);
     procedure ExitBtnClick(Sender: TObject);
+    procedure Solve2Click(Sender: TObject);
+    procedure TutorialClick(Sender: TObject);
+    procedure TutorialMenuClick(Sender: TObject);
+    procedure SolveMenuClick(Sender: TObject);
+    procedure ExitMenuClick(Sender: TObject);
   private
     grid: tstringgrid;
   public
@@ -44,6 +61,11 @@ begin
   Close;
 end;
 
+procedure TGridform.ExitMenuClick(Sender: TObject);
+begin
+  close;
+end;
+
 procedure TGridform.FillBtnClick(Sender: TObject);
 //fill grid with random integers
 // a stringgrid has a Cells property, essentially a 2D array of strings
@@ -59,8 +81,65 @@ begin
   end;
 end;
 
-procedure TGridform.UpGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
-  State: TGridDrawState);
+procedure TGridform.Solve2Click(Sender: TObject);
+begin
+  RubiksLbl.Visible:=false;
+  Solve2.Visible:=false;
+  Tutorial.Visible:=false;
+  ChooseLbl.Visible:=false;
+  UpGrid.Visible:=true;
+  DownGrid.Visible:=true;
+  BackGrid.Visible:=true;
+  FrontGrid.Visible:=true;
+  RightGrid.Visible:=true;
+  LeftGrid.Visible:=true;
+  FillBtn.Visible:=true;
+  ExitBtn.Visible:=true;
+  Solve.Visible:=true;
+  Next.Visible:=true;
+  Previous.Visible:=true;
+  ChoiceRG.Visible:=true;
+end;
+
+procedure TGridform.SolveMenuClick(Sender: TObject);
+begin
+  RubiksLbl.Visible:=false;
+  Solve2.Visible:=false;
+  Tutorial.Visible:=false;
+  ChooseLbl.Visible:=false;
+  UpGrid.Visible:=true;
+  DownGrid.Visible:=true;
+  BackGrid.Visible:=true;
+  FrontGrid.Visible:=true;
+  RightGrid.Visible:=true;
+  LeftGrid.Visible:=true;
+  FillBtn.Visible:=true;
+  ExitBtn.Visible:=true;
+  Solve.Visible:=true;
+  Next.Visible:=true;
+  Previous.Visible:=true;
+  ChoiceRG.Visible:=true;
+end;
+
+procedure TGridform.TutorialClick(Sender: TObject);
+begin
+  RubiksLbl.Visible:=false;
+  Solve2.Visible:=false;
+  Tutorial.Visible:=false;
+  ChooseLbl.Visible:=false;
+  UpGrid.Visible:=true;
+  DownGrid.Visible:=true;
+  BackGrid.Visible:=true;
+  FrontGrid.Visible:=true;
+  RightGrid.Visible:=true;
+  LeftGrid.Visible:=true;
+  ExitBtn.Visible:=true;
+  Solve.Visible:=false;
+  Next.Visible:=true;
+  Previous.Visible:=true;
+end;
+
+procedure TGridform.UpGridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
 // called whenever a cell is drawn
 // ACol and ARow are column and row number of cell
 // Rect is rectangle bounding cell
@@ -135,4 +214,22 @@ begin
      canvas.FillRect(Rect);
   end;  //with
 end;
+procedure TGridform.TutorialMenuClick(Sender: TObject);
+begin
+  RubiksLbl.Visible:=false;
+  Solve2.Visible:=false;
+  Tutorial.Visible:=false;
+  ChooseLbl.Visible:=false;
+  UpGrid.Visible:=true;
+  DownGrid.Visible:=true;
+  BackGrid.Visible:=true;
+  FrontGrid.Visible:=true;
+  RightGrid.Visible:=true;
+  LeftGrid.Visible:=true;
+  ExitBtn.Visible:=true;
+  Solve.Visible:=false;
+  Next.Visible:=true;
+  Previous.Visible:=true;
+end;
+
 end.

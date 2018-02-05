@@ -1,21 +1,53 @@
 object Gridform: TGridform
   Left = 0
   Top = 0
+  Cursor = crArrow
   Caption = 'Gridform'
-  ClientHeight = 695
-  ClientWidth = 849
+  ClientHeight = 666
+  ClientWidth = 834
   Color = clGradientActiveCaption
+  Constraints.MaxHeight = 725
+  Constraints.MaxWidth = 850
+  Constraints.MinHeight = 725
+  Constraints.MinWidth = 850
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = MainMenu
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object RubiksLbl: TLabel
+    Left = 189
+    Top = 184
+    Width = 466
+    Height = 58
+    Caption = 'Rubiks Cube Solver'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -48
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object ChooseLbl: TLabel
+    Left = 48
+    Top = 255
+    Width = 770
+    Height = 33
+    Caption = 'Do you want to solve a cube or learn the method to solve cubes?'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -27
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object UpGrid: TStringGrid
     Left = 248
-    Top = 0
+    Top = 24
     Width = 161
     Height = 161
     ColCount = 3
@@ -31,6 +63,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -42,19 +75,20 @@ object Gridform: TGridform
       50)
   end
   object FillBtn: TButton
-    Left = 622
-    Top = 72
-    Width = 75
+    Left = 624
+    Top = 276
+    Width = 81
     Height = 25
     Caption = 'Fill Grid'
     TabOrder = 1
+    Visible = False
     OnClick = FillBtnClick
   end
   object ChoiceRG: TRadioGroup
     Left = 622
-    Top = 152
+    Top = 64
     Width = 101
-    Height = 169
+    Height = 185
     Caption = 'Fill style'
     ItemIndex = 0
     Items.Strings = (
@@ -67,10 +101,11 @@ object Gridform: TGridform
       'Green'
       'Blue')
     TabOrder = 2
+    Visible = False
   end
   object FrontGrid: TStringGrid
     Left = 248
-    Top = 480
+    Top = 504
     Width = 161
     Height = 161
     ColCount = 3
@@ -86,6 +121,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 3
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -98,7 +134,7 @@ object Gridform: TGridform
   end
   object DownGrid: TStringGrid
     Left = 248
-    Top = 320
+    Top = 344
     Width = 161
     Height = 161
     ColCount = 3
@@ -114,6 +150,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 4
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -126,7 +163,7 @@ object Gridform: TGridform
   end
   object BackGrid: TStringGrid
     Left = 248
-    Top = 160
+    Top = 184
     Width = 161
     Height = 161
     ColCount = 3
@@ -142,6 +179,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 5
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -154,7 +192,7 @@ object Gridform: TGridform
   end
   object RightGrid: TStringGrid
     Left = 407
-    Top = 320
+    Top = 344
     Width = 161
     Height = 161
     ColCount = 3
@@ -170,6 +208,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 6
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -182,7 +221,7 @@ object Gridform: TGridform
   end
   object LeftGrid: TStringGrid
     Left = 87
-    Top = 320
+    Top = 344
     Width = 161
     Height = 161
     ColCount = 3
@@ -198,6 +237,7 @@ object Gridform: TGridform
     Font.Style = []
     ParentFont = False
     TabOrder = 7
+    Visible = False
     OnDrawCell = UpGridDrawCell
     ColWidths = (
       50
@@ -210,11 +250,74 @@ object Gridform: TGridform
   end
   object ExitBtn: TButton
     Left = 624
-    Top = 104
-    Width = 73
+    Top = 400
+    Width = 81
     Height = 25
     Caption = 'Exit'
     TabOrder = 8
+    Visible = False
     OnClick = ExitBtnClick
+  end
+  object Solve: TButton
+    Left = 624
+    Top = 307
+    Width = 81
+    Height = 25
+    Caption = 'Solve'
+    TabOrder = 9
+    Visible = False
+  end
+  object Next: TButton
+    Left = 624
+    Top = 338
+    Width = 81
+    Height = 25
+    Caption = 'Next Step'
+    TabOrder = 10
+    Visible = False
+  end
+  object Previous: TButton
+    Left = 624
+    Top = 369
+    Width = 81
+    Height = 25
+    Caption = 'Previous Step'
+    TabOrder = 11
+    Visible = False
+  end
+  object Solve2: TButton
+    Left = 328
+    Top = 307
+    Width = 81
+    Height = 25
+    Caption = 'Solve'
+    TabOrder = 12
+    OnClick = Solve2Click
+  end
+  object Tutorial: TButton
+    Left = 423
+    Top = 307
+    Width = 81
+    Height = 25
+    Caption = 'Tutorial'
+    TabOrder = 13
+    OnClick = TutorialClick
+  end
+  object MainMenu: TMainMenu
+    object Menu1: TMenuItem
+      Caption = 'Menu'
+      object TutorialMenu: TMenuItem
+        Caption = 'Tutorial'
+        OnClick = TutorialMenuClick
+      end
+      object SolveMenu: TMenuItem
+        Caption = 'Solve My Cube'
+        OnClick = SolveMenuClick
+      end
+      object ExitMenu: TMenuItem
+        Caption = 'Exit'
+        OnClick = ExitMenuClick
+      end
+    end
   end
 end
